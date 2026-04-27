@@ -11,7 +11,7 @@ body{margin:0;font-family:'Cormorant Garamond',serif;background:linear-gradient(
 .frame{border:3px solid var(--gold);border-radius:28px;padding:20px;background:#fff8ef;box-shadow:0 10px 30px rgba(0,0,0,.12)}
 h1{color:var(--green);margin:0 0 10px;font-family:'Great Vibes',cursive;font-size:clamp(42px,8vw,72px);font-weight:400;line-height:1;}
 #board{width:min(94vw,520px);height:min(94vw,520px);margin:20px auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px;touch-action:manipulation}
-.tile{background-image:url('foto.jpg');background-size:500% 500%;border:1px solid rgba(255,255,255,.35);cursor:pointer;transition:.2s transform;clip-path:path('M0,8 Q0,0 8,0 L32,0 Q40,8 48,0 L72,0 Q80,0 80,8 L80,32 Q72,40 80,48 L80,72 Q80,80 72,80 L48,80 Q40,72 32,80 L8,80 Q0,80 0,72 L0,48 Q8,40 0,32 Z');border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.tile{background-image:url('fotonossa.png');background-size:500% 500%;border:1px solid rgba(255,255,255,.35);cursor:pointer;transition:.2s transform;clip-path:path('M0,8 Q0,0 8,0 L32,0 Q40,8 48,0 L72,0 Q80,0 80,8 L80,32 Q72,40 80,48 L80,72 Q80,80 72,80 L48,80 Q40,72 32,80 L8,80 Q0,80 0,72 L0,48 Q8,40 0,32 Z');border-radius:8px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
 .tile:hover{transform:scale(1.02)}
 .empty{background:none;border:none;cursor:default}
 #overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;flex-direction:column;color:#fff;font-size:48px;z-index:5}
@@ -25,18 +25,18 @@ button{padding:12px 22px;border:none;border-radius:999px;background:var(--green)
 </head>
 <body>
 <div class='wrap'>
-<div class='frame'>
+<div id='startScreen' class='frame'><h1>Michele & Vojtekinho</h1><div class='small'>Para Vojtekinho, uma pequena lembrança de algo enorme ❤️</div><br><button onclick='startGame()'>Começar nossa história</button></div><div id='gameScreen' class='frame' style='display:none;opacity:0;transition:opacity 1.2s ease;'>
 <h1>Michele & Vojtekinho</h1>
-<div class='small'>Nosso puzzle ❤️</div>
+<div class='small'>Monte nossa memória ❤️ </div>
 <div id='board'></div>
 <button onclick='shuffleBoard()'>Shuffle 🧩</button>
 </div></div>
 <div id='overlay'></div>
-<div id='letter'><h2>Feliz 3 anos de namoro! ❤️</h2><p>Três anos se passaram, e ainda escolho você em cada detalhe do tempo.</p><p>Obrigada por existir na minha história, por cada reencontro, por cada saudade vencida, por cada momento só nosso.</p><p>Feliz nosso dia, Vojtekinho. ❤️<br>— Michele</p></div>
+<div id='letter'><h2>Feliz 3 anos de namoro, meu čuču! ❤️</h2><p>Três anos se passaram, e ainda escolho você em cada detalhe do tempo.</p><p>Obrigada por existir na minha história, por cada reencontro, por cada saudade vencida, por cada momento só nosso.</p><p>Feliz nosso dia, Vojtekinho. ❤️<br>— Michele</p></div>
 <script>
 const size=5; const board=document.getElementById('board'); let tiles=[]; let empty=24;
 function makeTiles(){board.innerHTML=''; tiles=[]; for(let i=0;i<25;i++){let d=document.createElement('div'); d.className='tile'; if(i===24){d.classList.add('empty');} else {d.style.backgroundPosition=`${(i%5)*25}% ${Math.floor(i/5)*25}%`; d.onclick=()=>move(i);} board.appendChild(d); tiles.push(i);} render();}
-function render(){[...board.children].forEach((el,pos)=>{const val=tiles[pos]; el.className='tile'; if(val===24){el.classList.add('empty'); el.style.backgroundImage='none';} else {el.style.backgroundImage="url('foto.jpg')"; el.style.backgroundPosition=`${(val%5)*25}% ${Math.floor(val/5)*25}%`; el.onclick=()=>move(pos);} });}
+function render(){[...board.children].forEach((el,pos)=>{const val=tiles[pos]; el.className='tile'; if(val===24){el.classList.add('empty'); el.style.backgroundImage='none';} else {el.style.backgroundImage="url('fotonossa.png')"; el.style.backgroundPosition=`${(val%5)*25}% ${Math.floor(val/5)*25}%`; el.onclick=()=>move(pos);} });}
 function neighbors(i){const r=Math.floor(i/5),c=i%5;return [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].filter(([a,b])=>a>=0&&a<5&&b>=0&&b<5).map(([a,b])=>a*5+b)}
 function beep(f=600,t=.05){const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.value=.02;o.start();o.stop(a.currentTime+t)}
 function move(i){if(!neighbors(i).includes(empty))return; [tiles[i],tiles[empty]]=[tiles[empty],tiles[i]]; empty=i; beep(); render(); checkWin();}
@@ -44,7 +44,6 @@ function shuffleBoard(){for(let k=0;k<300;k++){const n=neighbors(empty); const p
 function solved(){return tiles.every((v,i)=>v===i)}
 async function checkWin(){if(!solved())return; const ov=document.getElementById('overlay'); ov.style.display='flex'; for(let i=1;i<=3;i++){ov.innerHTML=i<3?i+'...':'3 anos de namoro ❤️'; beep(400+i*120,.15); await new Promise(r=>setTimeout(r,1000));} ov.style.display='none'; hearts(); document.getElementById('letter').style.display='block';}
 function hearts(){for(let i=0;i<30;i++){setTimeout(()=>{let h=document.createElement('div');h.className='heart';h.textContent='❤';h.style.left=Math.random()*100+'vw';h.style.fontSize=(18+Math.random()*20)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),4000);beep(900,.03);},i*120)} }
-makeTiles(); shuffleBoard();
-</script>
+function startGame(){document.getElementById('startScreen').style.display='none';const g=document.getElementById('gameScreen');g.style.display='block';setTimeout(()=>g.style.opacity='1',50);makeTiles();shuffleBoard();}</script>
 </body>
 </html>
