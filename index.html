@@ -275,65 +275,244 @@ button:hover{
 <div id="overlay"></div>
 
 <div id="letter">
-  <h2>Feliz 3 anos de nós ❤️</h2>
+  <h2>Feliz 3 anos de namoro, meu amorzinho! ❤️</h2>
 
   <p>
-    Três anos se passaram, e ainda escolho você
-    em cada detalhe do tempo.
+    Três anos se passaram, e eu continuo te amando mais a cada dia.
   </p>
 
   <p>
-    Obrigada por existir na minha história,
+    Obrigada por existir na minha vida,
     por cada reencontro,
     por cada saudade vencida,
     por cada momento só nosso.
   </p>
 
   <p>
-    Feliz nosso dia, Vojtekinho ❤️<br>
-    — Michele
+    Feliz nosso dia, meu Vojtekinho ❤️<br>
+    — da sua Michele
   </p>
 </div>
 
+<!-- SUBSTITUA SOMENTE A PARTE <script>...</script> DO SEU ARQUIVO POR ESTA -->
+
 <script>
-const board = document.getElementById("board");
-const tray = document.getElementById("tray");
-const startBtn = document.getElementById("startBtn");
+window.addEventListener("DOMContentLoaded", () => {
 
-let placed = 0;
+  const board = document.getElementById("board");
+  const tray = document.getElementById("tray");
+  const startBtn = document.getElementById("startBtn");
 
-/* sons */
-function beep(freq=700,duration=.05){
-  const ctx = new(window.AudioContext || window.webkitAudioContext)();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
+  let placed = 0;
 
-  osc.frequency.value = freq;
-  gain.gain.value = .02;
+  /* áudio */
+  function beep(freq = 700, duration = .05){
+    try{
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      gain.gain.value = .02;
 
-  osc.start();
-  osc.stop(ctx.currentTime + duration);
-}
+      osc.connect(gain);
+      gain.connect(ctx.destination);
 
-/* iniciar */
-function startGame(){
-  document.getElementById("start").style.display = "none";
+      osc.start();
+      osc.stop(ctx.currentTime + duration);
+    }catch(e){}
+  }
 
-  const game = document.getElementById("game");
-  game.style.display = "block";
+  /* botão */
+  startBtn.addEventListener("click", startGame);
 
-  setTimeout(()=>{
-    game.style.opacity = "1";
-  },50);
+  function startGame(){
+    document.getElementById("start").style.display = "none";
 
-  createPuzzle();
-}
+    const game = document.getElementById("game");
+    game.style.display = "block";
 
-startBtn.addEventListener("click", startGame);
+    setTimeout(() => {
+      game.style.opacity = "1";
+    }, 50);
 
-/* embaralhar */
-function shuffle(arr){
-  for(let i=arr.length-1
+    createPuzzle();
+  }
+
+  function shuffle(arr){
+    for(let i = arr.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  function createPuzzle(){
+    board.innerHTML = "";
+    tray.innerHTML = "";
+    placed = 0;
+
+    for(let i = 0; i < 16; i++){
+      const slot = document.createElement("div");
+      slot.className = "slot";
+      slot.dataset.index = i;
+      board.appendChild(slot);
+    }
+
+    let nums = [...Array(16).keys()];
+    shuffle(nums);
+
+    nums.forEach(n => {
+      const piece = document.createElement("div");
+
+      piece.className = "piece tray-piece";
+      piece.dataset.index = n;
+
+      const x = (n % 4) * 33.33;
+      const y = Math.floor(n / 4) * 33.33;
+
+      piece.style.backgroundPosition = `${x}% ${y}%`;
+      piece.style.transform = `rotate(${Math.random()*8-4}deg)`;
+
+      tray.appendChild(piece);
+
+      drag(piece);
+    });
+  }
+
+  function drag(el){
+    let offsetX, offsetY;
+
+    el.addEventListener("pointerdown", e => {
+
+      const rect = el.getBoundingClientRect();
+
+      offsetX = e.clientX - rect.left;
+      offsetY = e.clientY - rect.top;
+
+      el.style.position = "fixed";
+      el.style.left = rect.left + "px";
+      el.style.top = rect.top + "px";
+      el.style.zIndex = "100";
+
+      document.body.appendChild(el);
+
+      function move(ev){
+        el.style.left = (ev.clientX - offsetX) + "px";
+        el.style.top  = (ev.clientY - offsetY) + "px";
+      }
+
+      function up(ev){
+        document.removeEventListener("pointermove", move);
+        document.removeEventListener("pointerup", up);
+
+        let ok = false;
+
+        document.querySelectorAll(".slot").forEach(slot => {
+
+          const r = slot.getBoundingClientRect();
+
+          const inside =
+            ev.clientX > r.left &&
+            ev.clientX < r.right &&
+            ev.clientY > r.top &&
+            ev.clientY < r.bottom;
+
+          if(inside){
+
+            if(
+              Number(slot.dataset.index) === Number(el.dataset.index) &&
+              slot.children.length === 0
+            ){
+              slot.appendChild(el);
+
+              el.style.position = "absolute";
+              el.style.inset = "0";
+              el.style.width = "100%";
+              el.style.height = "100%";
+              el.style.transform = "none";
+
+              placed++;
+              ok = true;
+
+              beep(900,.07);
+
+              if(placed === 16){
+                win();
+              }
+            }
+          }
+        });
+
+        if(!ok){
+          tray.appendChild(el);
+
+          el.style.position = "relative";
+          el.style.left = "0";
+          el.style.top = "0";
+          el.style.width = "";
+          el.style.height = "";
+          el.style.inset = "";
+          el.style.transform = `rotate(${Math.random()*8-4}deg)`;
+
+          beep(420,.04);
+        }
+      }
+
+      document.addEventListener("pointermove", move);
+      document.addEventListener("pointerup", up);
+    });
+  }
+
+  async function win(){
+
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = "flex";
+
+    for(let i=1;i<=3;i++){
+
+      overlay.innerHTML =
+        i < 3 ? i + "..." : "3 anos de namoro ❤️";
+
+      beep(400 + i*130, .18);
+
+      await new Promise(r => setTimeout(r,1000));
+    }
+
+    overlay.style.display = "none";
+
+    board.innerHTML = `
+      <div class="final-photo"></div>
+    `;
+
+    hearts();
+
+    setTimeout(() => {
+      document.getElementById("letter").style.display = "block";
+    }, 700);
+  }
+
+  function hearts(){
+
+    for(let i=0;i<35;i++){
+
+      setTimeout(() => {
+
+        const h = document.createElement("div");
+
+        h.className = "heart";
+        h.innerHTML = "❤";
+        h.style.left = Math.random()*100 + "vw";
+        h.style.fontSize =
+          (18 + Math.random()*20) + "px";
+
+        document.body.appendChild(h);
+
+        setTimeout(() => h.remove(), 4000);
+
+      }, i * 110);
+    }
+  }
+
+});
+</script>
