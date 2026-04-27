@@ -110,6 +110,7 @@ button:hover{
   overflow:hidden;
   background:#000;
   position:relative;
+  isolation:isolate;
 }
 
 .slot{
@@ -175,7 +176,7 @@ button:hover{
   background:linear-gradient(180deg,#2b1f2c,#1c141d);
   box-shadow:0 24px 48px rgba(0,0,0,.5);
   animation:rise 2s forwards;
-  z-index:60;
+  z-index:999;
 }
 
 #letter h2{
@@ -208,8 +209,10 @@ button:hover{
   background-position:center;
   opacity:0;
   animation:fadePhoto 1s forwards;
-  z-index:20;
-}
+
+  z-index:1;
+  pointer-events:none;
+  }
 
 @keyframes fadePhoto{
   from{opacity:0;}
