@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>3 anos de nós</title>
+<title>3 anos de namoro ❤️ </title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
@@ -19,19 +19,15 @@
 --text:#f5e9de;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:'Cormorant Garamond',serif;
 background:radial-gradient(circle at top,#2b1723,#171118 55%,#0b090d);
 color:var(--text);
 min-height:100vh;
-overflow-x:hidden;
 padding:14px;
+overflow-x:hidden;
 }
 
 body::before{
@@ -41,13 +37,10 @@ inset:0;
 pointer-events:none;
 background-image:radial-gradient(circle,rgba(200,169,107,.12) 1px,transparent 1px);
 background-size:34px 34px;
-opacity:.25;
+opacity:.22;
 }
 
-.wrap{
-max-width:900px;
-margin:auto;
-}
+.wrap{max-width:900px;margin:auto;}
 
 .frame{
 border:2px solid var(--gold);
@@ -56,6 +49,8 @@ padding:18px;
 background:linear-gradient(180deg,var(--panel),var(--panel2));
 box-shadow:0 20px 45px rgba(0,0,0,.45);
 text-align:center;
+position:relative;
+z-index:2;
 }
 
 h1{
@@ -92,11 +87,7 @@ transform:translateY(-2px);
 box-shadow:0 0 24px rgba(122,47,73,.55);
 }
 
-#game{
-display:none;
-opacity:0;
-transition:1s;
-}
+#game{display:none;opacity:0;transition:1s;}
 
 #board{
 width:min(92vw,520px);
@@ -105,41 +96,41 @@ margin:20px auto;
 display:grid;
 grid-template-columns:repeat(4,1fr);
 grid-template-rows:repeat(4,1fr);
-gap:2px;
-border:2px solid rgba(255,255,255,.15);
-border-radius:16px;
+gap:0;
+border:2px solid rgba(255,255,255,.12);
+border-radius:18px;
 overflow:hidden;
-background:rgba(255,255,255,.03);
-}
-
-.slot{
-border:1px dashed rgba(255,255,255,.08);
+background:#000;
 position:relative;
 }
 
+.slot{
+position:relative;
+overflow:hidden;
+}
+
 .piece{
-width:78px;
-height:78px;
-border-radius:12px;
+width:100%;
+height:100%;
 background-image:url('fotonossa.png');
 background-size:400% 400%;
 cursor:grab;
 touch-action:none;
-box-shadow:
-0 8px 18px rgba(0,0,0,.35),
-inset 0 0 0 1px rgba(255,255,255,.15);
 transition:.2s;
 position:relative;
-}
 
-.piece:active{
-cursor:grabbing;
-transform:scale(1.04);
+/* borda jigsaw */
+clip-path:path('M0,10 Q0,0 10,0 L42,0 Q52,10 62,0 L100,0 L100,42 Q90,52 100,62 L100,100 L62,100 Q52,90 42,100 L0,100 L0,62 Q10,52 0,42 Z');
+
+box-shadow:
+inset 0 0 0 1px rgba(255,255,255,.12),
+0 8px 18px rgba(0,0,0,.35);
+border-radius:8px;
 }
 
 #tray{
-margin-top:20px;
-min-height:130px;
+margin-top:18px;
+min-height:140px;
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
@@ -147,6 +138,11 @@ gap:10px;
 padding:12px;
 border-radius:18px;
 background:rgba(255,255,255,.03);
+}
+
+.tray-piece{
+width:78px;
+height:78px;
 }
 
 #overlay{
@@ -157,8 +153,8 @@ justify-content:center;
 align-items:center;
 background:rgba(0,0,0,.55);
 font-size:48px;
-z-index:30;
 text-align:center;
+z-index:50;
 padding:20px;
 }
 
@@ -166,7 +162,7 @@ padding:20px;
 display:none;
 position:fixed;
 left:50%;
-bottom:-600px;
+bottom:-700px;
 transform:translateX(-50%);
 width:min(92vw,520px);
 padding:24px;
@@ -175,7 +171,7 @@ border:2px solid var(--gold);
 background:linear-gradient(180deg,#2b1f2c,#1c141d);
 box-shadow:0 24px 48px rgba(0,0,0,.5);
 animation:rise 2s forwards;
-z-index:40;
+z-index:60;
 }
 
 #letter h2{
@@ -196,7 +192,8 @@ position:fixed;
 bottom:-30px;
 font-size:24px;
 animation:float 4s linear forwards;
-z-index:35;
+z-index:55;
+pointer-events:none;
 }
 
 @keyframes float{
@@ -207,9 +204,7 @@ opacity:0;
 }
 
 @keyframes rise{
-to{
-bottom:7%;
-}
+to{bottom:6%;}
 }
 
 .correct{
@@ -217,38 +212,49 @@ animation:glow .45s;
 }
 
 @keyframes glow{
-0%{transform:scale(1);}
-50%{transform:scale(1.06); box-shadow:0 0 20px rgba(200,169,107,.8);}
-100%{transform:scale(1);}
+50%{
+box-shadow:0 0 20px rgba(200,169,107,.8);
+transform:scale(1.03);
+}
+}
+
+/* FOTO COMPLETA FINAL */
+.final-photo{
+position:absolute;
+inset:0;
+background-image:url('fotonossa.png');
+background-size:cover;
+background-position:center;
+z-index:20;
+opacity:0;
+animation:showPhoto 1.2s forwards;
+}
+
+@keyframes showPhoto{
+to{opacity:1;}
 }
 
 @media(max-width:600px){
-.piece{
-width:66px;
-height:66px;
-}
-#letter p{
-font-size:19px;
-}
-#overlay{
-font-size:34px;
-}
+#overlay{font-size:34px;}
+#letter p{font-size:19px;}
+.tray-piece{width:66px;height:66px;}
 }
 </style>
 </head>
 
 <body>
+
 <div class="wrap">
 
 <div id="start" class="frame">
 <h1>Michele & Vojtekinho</h1>
-<div class="sub">Para Vojtekinho, uma pequena lembrança de algo enorme ❤️</div>
-<button onclick="startGame()">Começar nossa história</button>
+<div class="sub">Uma lembrança de nossos dias inesquecíveis ❤️</div>
+<button onclick="startGame()">Relembrar nossa história</button>
 </div>
 
 <div id="game" class="frame">
 <h1>Michele & Vojtekinho</h1>
-<div class="sub">Monte nossa memória 💛</div>
+<div class="sub">Monte nossa memória 🧩</div>
 
 <div id="board"></div>
 <div id="tray"></div>
@@ -259,24 +265,23 @@ font-size:34px;
 <div id="overlay"></div>
 
 <div id="letter">
-<h2>Feliz 3 anos de nós ❤️</h2>
-<p>Três anos se passaram, e ainda escolho você em cada detalhe do tempo.</p>
-<p>Obrigada por existir na minha história, por cada reencontro, por cada saudade vencida, por cada momento só nosso.</p>
-<p>Feliz nosso dia, Vojtekinho ❤️<br>— Michele</p>
+<h2>Feliz 3 anos de namoro, meu amorzinho!❤️</h2>
+<p>Três anos se passaram, e continuo te amando cada vez mais.</p>
+<p>Obrigada por existir na minha vida, por cada reencontro, por cada saudade vencida, por cada momento só nosso.</p>
+<p>Feliz nosso dia, meu Vojtekinho!❤️<br>— da sua Michele</p>
 </div>
 
 <script>
-const board = document.getElementById("board");
-const tray = document.getElementById("tray");
-
-let placed = 0;
+const board=document.getElementById("board");
+const tray=document.getElementById("tray");
+let placed=0;
 
 function beep(freq=700,d=.05){
-const ctx = new(window.AudioContext||window.webkitAudioContext)();
-const osc = ctx.createOscillator();
-const gain = ctx.createGain();
-osc.frequency.value = freq;
-gain.gain.value = .02;
+const ctx=new(window.AudioContext||window.webkitAudioContext)();
+const osc=ctx.createOscillator();
+const gain=ctx.createGain();
+osc.frequency.value=freq;
+gain.gain.value=.02;
 osc.connect(gain);
 gain.connect(ctx.destination);
 osc.start();
@@ -291,12 +296,12 @@ setTimeout(()=>game.style.opacity="1",50);
 createPuzzle();
 }
 
-function shuffle(arr){
-for(let i=arr.length-1;i>0;i--){
+function shuffle(a){
+for(let i=a.length-1;i>0;i--){
 const j=Math.floor(Math.random()*(i+1));
-[arr[i],arr[j]]=[arr[j],arr[i]];
+[a[i],a[j]]=[a[j],a[i]];
 }
-return arr;
+return a;
 }
 
 function createPuzzle(){
@@ -315,39 +320,32 @@ let nums=[...Array(16).keys()];
 shuffle(nums);
 
 nums.forEach(n=>{
-const piece=document.createElement("div");
-piece.className="piece";
-piece.draggable=false;
-piece.dataset.index=n;
+const p=document.createElement("div");
+p.className="piece tray-piece";
+p.dataset.index=n;
 
 const x=(n%4)*33.33;
 const y=Math.floor(n/4)*33.33;
-piece.style.backgroundPosition=`${x}% ${y}%`;
+p.style.backgroundPosition=`${x}% ${y}%`;
+p.style.transform=`rotate(${Math.random()*8-4}deg)`;
 
-piece.style.transform=`rotate(${Math.random()*8-4}deg)`;
-
-tray.appendChild(piece);
-
-dragElement(piece);
+tray.appendChild(p);
+drag(p);
 });
 }
 
-function dragElement(el){
-let startX,startY,offsetX,offsetY;
+function drag(el){
+let offsetX,offsetY;
 
 el.addEventListener("pointerdown",e=>{
-startX=e.clientX;
-startY=e.clientY;
-
-const rect=el.getBoundingClientRect();
-offsetX=startX-rect.left;
-offsetY=startY-rect.top;
+const r=el.getBoundingClientRect();
+offsetX=e.clientX-r.left;
+offsetY=e.clientY-r.top;
 
 el.style.position="fixed";
-el.style.zIndex="50";
-el.style.left=rect.left+"px";
-el.style.top=rect.top+"px";
-
+el.style.left=r.left+"px";
+el.style.top=r.top+"px";
+el.style.zIndex="100";
 document.body.appendChild(el);
 
 function move(ev){
@@ -359,10 +357,9 @@ function up(ev){
 document.removeEventListener("pointermove",move);
 document.removeEventListener("pointerup",up);
 
-const slots=[...document.querySelectorAll(".slot")];
-let placedOk=false;
+let ok=false;
 
-slots.forEach(slot=>{
+document.querySelectorAll(".slot").forEach(slot=>{
 const r=slot.getBoundingClientRect();
 
 if(
@@ -371,77 +368,6 @@ ev.clientX<r.right &&
 ev.clientY>r.top &&
 ev.clientY<r.bottom
 ){
-if(Number(slot.dataset.index)===Number(el.dataset.index) && slot.children.length===0){
-
-slot.appendChild(el);
-el.style.position="relative";
-el.style.left="0";
-el.style.top="0";
-el.style.width="100%";
-el.style.height="100%";
-el.style.transform="rotate(0deg)";
-el.classList.add("correct");
-
-beep(850,.07);
-
-placed++;
-placedOk=true;
-
-if(placed===16){
-win();
-}
-}
-}
-});
-
-if(!placedOk){
-tray.appendChild(el);
-el.style.position="relative";
-el.style.left="0";
-el.style.top="0";
-el.style.width="";
-el.style.height="";
-el.style.transform=`rotate(${Math.random()*8-4}deg)`;
-beep(420,.04);
-}
-}
-
-document.addEventListener("pointermove",move);
-document.addEventListener("pointerup",up);
-});
-}
-
-async function win(){
-const ov=document.getElementById("overlay");
-ov.style.display="flex";
-
-for(let i=1;i<=3;i++){
-ov.innerHTML=i<3?i+"...":"3 anos de namoro ❤️";
-beep(400+i*130,.18);
-await new Promise(r=>setTimeout(r,1000));
-}
-
-ov.style.display="none";
-
-hearts();
-
-document.getElementById("letter").style.display="block";
-}
-
-function hearts(){
-for(let i=0;i<35;i++){
-setTimeout(()=>{
-const h=document.createElement("div");
-h.className="heart";
-h.innerHTML="❤";
-h.style.left=Math.random()*100+"vw";
-h.style.fontSize=(18+Math.random()*20)+"px";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),4000);
-beep(950,.03);
-},i*110);
-}
-}
-</script>
-</body>
-</html> 
+if(
+Number(slot.dataset.index)===Number(el.dataset.index) &&
+slot
