@@ -1,224 +1,238 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>3 anos de nós</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#110d12;
-  --bg2:#1b131c;
-  --gold:#c6a56a;
-  --gold-soft:#e2c58f;
-  --rose:#7b2f49;
-  --rose2:#562234;
-  --panel:#1e1720;
-  --panel2:#2a1d2c;
-  --text:#f4e8de;
+--bg:#120d13;
+--bg2:#1b121a;
+--gold:#c8a96b;
+--rose:#7a2f49;
+--rose2:#552032;
+--panel:#201722;
+--panel2:#2a1c2b;
+--text:#f5e9de;
 }
 
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 body{
-  font-family:'Cormorant Garamond', serif;
-  background:
-    radial-gradient(circle at top, #2b1a26 0%, #171118 55%, #0b090c 100%);
-  color:var(--text);
-  min-height:100vh;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:16px;
+font-family:'Cormorant Garamond',serif;
+background:radial-gradient(circle at top,#2b1723,#171118 55%,#0b090d);
+color:var(--text);
+min-height:100vh;
+overflow-x:hidden;
+padding:14px;
 }
 
-/* partículas douradas suaves */
 body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background-image:
-    radial-gradient(circle, rgba(198,165,106,.18) 1px, transparent 1px);
-  background-size:38px 38px;
-  opacity:.22;
-  pointer-events:none;
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background-image:radial-gradient(circle,rgba(200,169,107,.12) 1px,transparent 1px);
+background-size:34px 34px;
+opacity:.25;
 }
 
 .wrap{
-  width:100%;
-  max-width:900px;
+max-width:900px;
+margin:auto;
 }
 
 .frame{
-  border:2px solid var(--gold);
-  border-radius:28px;
-  padding:18px;
-  background:linear-gradient(180deg,var(--panel),var(--panel2));
-  box-shadow:0 20px 45px rgba(0,0,0,.45);
-  text-align:center;
+border:2px solid var(--gold);
+border-radius:28px;
+padding:18px;
+background:linear-gradient(180deg,var(--panel),var(--panel2));
+box-shadow:0 20px 45px rgba(0,0,0,.45);
+text-align:center;
 }
 
 h1{
-  font-family:'Great Vibes', cursive;
-  font-size:clamp(44px,8vw,76px);
-  color:#f3d8c8;
-  font-weight:400;
-  line-height:1;
-  margin-bottom:8px;
+font-family:'Great Vibes',cursive;
+font-size:clamp(44px,8vw,76px);
+font-weight:400;
+color:#f2d6c6;
+line-height:1;
+margin-bottom:8px;
 }
 
-.subtitle{
-  font-size:18px;
-  opacity:.9;
-  color:#ead8cf;
+.sub{
+font-size:18px;
+color:#ead7cc;
+opacity:.92;
 }
 
 button{
-  margin-top:18px;
-  border:none;
-  padding:12px 24px;
-  border-radius:999px;
-  font-size:18px;
-  cursor:pointer;
-  color:#fff;
-  font-family:'Cormorant Garamond', serif;
-  background:linear-gradient(180deg,var(--rose),var(--rose2));
-  box-shadow:0 0 18px rgba(123,47,73,.35);
-  transition:.25s ease;
+margin-top:18px;
+padding:12px 24px;
+border:none;
+border-radius:999px;
+cursor:pointer;
+font-size:18px;
+font-family:'Cormorant Garamond',serif;
+color:#fff;
+background:linear-gradient(180deg,var(--rose),var(--rose2));
+box-shadow:0 0 18px rgba(122,47,73,.35);
+transition:.25s;
 }
 
 button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 0 28px rgba(123,47,73,.55);
+transform:translateY(-2px);
+box-shadow:0 0 24px rgba(122,47,73,.55);
 }
 
-#gameScreen{
-  display:none;
-  opacity:0;
-  transition:opacity 1.2s ease;
+#game{
+display:none;
+opacity:0;
+transition:1s;
 }
 
 #board{
-  width:min(94vw,520px);
-  height:min(94vw,520px);
-  margin:20px auto;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:2px;
-  touch-action:manipulation;
+width:min(92vw,520px);
+height:min(92vw,520px);
+margin:20px auto;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+grid-template-rows:repeat(4,1fr);
+gap:2px;
+border:2px solid rgba(255,255,255,.15);
+border-radius:16px;
+overflow:hidden;
+background:rgba(255,255,255,.03);
 }
 
-.tile{
-  cursor:pointer;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,.25);
-  background-image:url("fotonossa.png");
-  background-size:500% 500%;
-  transition:.2s transform;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.12),
-    0 4px 10px rgba(0,0,0,.25);
+.slot{
+border:1px dashed rgba(255,255,255,.08);
+position:relative;
 }
 
-.tile:hover{
-  transform:scale(1.02);
+.piece{
+width:78px;
+height:78px;
+border-radius:12px;
+background-image:url('fotonossa.png');
+background-size:400% 400%;
+cursor:grab;
+touch-action:none;
+box-shadow:
+0 8px 18px rgba(0,0,0,.35),
+inset 0 0 0 1px rgba(255,255,255,.15);
+transition:.2s;
+position:relative;
 }
 
-.empty{
-  background:none !important;
-  border:none;
-  box-shadow:none;
-  cursor:default;
+.piece:active{
+cursor:grabbing;
+transform:scale(1.04);
+}
+
+#tray{
+margin-top:20px;
+min-height:130px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+padding:12px;
+border-radius:18px;
+background:rgba(255,255,255,.03);
 }
 
 #overlay{
-  position:fixed;
-  inset:0;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,.55);
-  font-size:52px;
-  color:#fff;
-  z-index:20;
-  text-align:center;
-  padding:20px;
+position:fixed;
+inset:0;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.55);
+font-size:48px;
+z-index:30;
+text-align:center;
+padding:20px;
 }
 
 #letter{
-  position:fixed;
-  left:50%;
-  bottom:-600px;
-  transform:translateX(-50%);
-  width:min(92vw,520px);
-  padding:24px;
-  border-radius:24px;
-  border:2px solid var(--gold);
-  background:linear-gradient(180deg,#2b202d,#1c141d);
-  box-shadow:0 24px 48px rgba(0,0,0,.5);
-  z-index:30;
-  display:none;
-  animation:rise 2s forwards;
+display:none;
+position:fixed;
+left:50%;
+bottom:-600px;
+transform:translateX(-50%);
+width:min(92vw,520px);
+padding:24px;
+border-radius:24px;
+border:2px solid var(--gold);
+background:linear-gradient(180deg,#2b1f2c,#1c141d);
+box-shadow:0 24px 48px rgba(0,0,0,.5);
+animation:rise 2s forwards;
+z-index:40;
 }
 
 #letter h2{
-  font-family:'Great Vibes', cursive;
-  font-size:44px;
-  color:#f2d3bf;
-  margin-bottom:12px;
+font-family:'Great Vibes',cursive;
+font-size:42px;
+margin-bottom:12px;
+color:#f4d5c3;
 }
 
 #letter p{
-  font-size:22px;
-  line-height:1.4;
-  margin-bottom:12px;
-}
-
-@keyframes rise{
-  to{
-    bottom:7%;
-  }
+font-size:22px;
+line-height:1.4;
+margin-bottom:10px;
 }
 
 .heart{
-  position:fixed;
-  bottom:-30px;
-  font-size:24px;
-  animation:floatUp 4s linear forwards;
-  z-index:10;
+position:fixed;
+bottom:-30px;
+font-size:24px;
+animation:float 4s linear forwards;
+z-index:35;
 }
 
-@keyframes floatUp{
-  to{
-    transform:translateY(-115vh);
-    opacity:0;
-  }
+@keyframes float{
+to{
+transform:translateY(-115vh);
+opacity:0;
+}
+}
+
+@keyframes rise{
+to{
+bottom:7%;
+}
+}
+
+.correct{
+animation:glow .45s;
+}
+
+@keyframes glow{
+0%{transform:scale(1);}
+50%{transform:scale(1.06); box-shadow:0 0 20px rgba(200,169,107,.8);}
+100%{transform:scale(1);}
 }
 
 @media(max-width:600px){
-  .frame{
-    padding:14px;
-    border-radius:22px;
-  }
-
-  .subtitle{
-    font-size:16px;
-  }
-
-  #letter p{
-    font-size:19px;
-  }
-
-  #overlay{
-    font-size:36px;
-  }
+.piece{
+width:66px;
+height:66px;
+}
+#letter p{
+font-size:19px;
+}
+#overlay{
+font-size:34px;
+}
 }
 </style>
 </head>
@@ -226,227 +240,208 @@ button:hover{
 <body>
 <div class="wrap">
 
-  <!-- TELA INICIAL -->
-  <div id="startScreen" class="frame">
-    <h1>Michele & Vojtekinho</h1>
-    <div class="subtitle">
-      Para Vojtekinho, uma pequena lembrança de algo enorme ❤️
-    </div>
-    <button onclick="startGame()">Começar nossa história</button>
-  </div>
+<div id="start" class="frame">
+<h1>Michele & Vojtekinho</h1>
+<div class="sub">Para Vojtekinho, uma pequena lembrança de algo enorme ❤️</div>
+<button onclick="startGame()">Começar nossa história</button>
+</div>
 
-  <!-- GAME -->
-  <div id="gameScreen" class="frame">
-    <h1>Michele & Vojtekinho</h1>
-    <div class="subtitle">Monte nossa memória 💛</div>
+<div id="game" class="frame">
+<h1>Michele & Vojtekinho</h1>
+<div class="sub">Monte nossa memória 💛</div>
 
-    <div id="board"></div>
-
-    <button onclick="shuffleBoard()">Embaralhar</button>
-  </div>
+<div id="board"></div>
+<div id="tray"></div>
+</div>
 
 </div>
 
-<!-- OVERLAY -->
 <div id="overlay"></div>
 
-<!-- CARTA -->
 <div id="letter">
-  <h2>Feliz 3 anos de nós ❤️</h2>
-
-  <p>
-    Três anos se passaram, e ainda escolho você em cada detalhe do tempo.
-  </p>
-
-  <p>
-    Obrigada por existir na minha história, por cada reencontro, por cada
-    saudade vencida, por cada momento só nosso.
-  </p>
-
-  <p>
-    Feliz nosso dia, Vojtekinho ❤️<br>
-    — Michele
-  </p>
+<h2>Feliz 3 anos de nós ❤️</h2>
+<p>Três anos se passaram, e ainda escolho você em cada detalhe do tempo.</p>
+<p>Obrigada por existir na minha história, por cada reencontro, por cada saudade vencida, por cada momento só nosso.</p>
+<p>Feliz nosso dia, Vojtekinho ❤️<br>— Michele</p>
 </div>
 
 <script>
-const size = 5;
 const board = document.getElementById("board");
+const tray = document.getElementById("tray");
 
-let tiles = [];
-let empty = 24;
+let placed = 0;
 
-/* áudio */
-function beep(freq=700, duration=.05){
-  const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.frequency.value = freq;
-  gain.gain.value = .02;
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start();
-  osc.stop(ctx.currentTime + duration);
+function beep(freq=700,d=.05){
+const ctx = new(window.AudioContext||window.webkitAudioContext)();
+const osc = ctx.createOscillator();
+const gain = ctx.createGain();
+osc.frequency.value = freq;
+gain.gain.value = .02;
+osc.connect(gain);
+gain.connect(ctx.destination);
+osc.start();
+osc.stop(ctx.currentTime+d);
 }
 
-/* start */
 function startGame(){
-  document.getElementById("startScreen").style.display = "none";
-
-  const game = document.getElementById("gameScreen");
-  game.style.display = "block";
-
-  setTimeout(()=>{
-    game.style.opacity = "1";
-  },50);
-
-  makeTiles();
-  shuffleBoard();
+document.getElementById("start").style.display="none";
+const game=document.getElementById("game");
+game.style.display="block";
+setTimeout(()=>game.style.opacity="1",50);
+createPuzzle();
 }
 
-/* cria peças */
-function makeTiles(){
-  board.innerHTML = "";
-  tiles = [];
-
-  for(let i=0;i<25;i++){
-    const div = document.createElement("div");
-    div.className = "tile";
-
-    if(i === 24){
-      div.classList.add("empty");
-    }
-
-    board.appendChild(div);
-    tiles.push(i);
-  }
-
-  render();
+function shuffle(arr){
+for(let i=arr.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[arr[i],arr[j]]=[arr[j],arr[i]];
+}
+return arr;
 }
 
-/* render */
-function render(){
-  [...board.children].forEach((el,pos)=>{
-    const val = tiles[pos];
+function createPuzzle(){
+board.innerHTML="";
+tray.innerHTML="";
+placed=0;
 
-    el.className = "tile";
-
-    if(val === 24){
-      el.classList.add("empty");
-      el.onclick = null;
-      return;
-    }
-
-    const x = (val % 5) * 25;
-    const y = Math.floor(val / 5) * 25;
-
-    el.style.backgroundPosition = `${x}% ${y}%`;
-    el.onclick = ()=>move(pos);
-  });
+for(let i=0;i<16;i++){
+const slot=document.createElement("div");
+slot.className="slot";
+slot.dataset.index=i;
+board.appendChild(slot);
 }
 
-/* vizinhos */
-function neighbors(i){
-  const r = Math.floor(i / 5);
-  const c = i % 5;
+let nums=[...Array(16).keys()];
+shuffle(nums);
 
-  return [
-    [r-1,c],
-    [r+1,c],
-    [r,c-1],
-    [r,c+1]
-  ]
-  .filter(([a,b])=>a>=0 && a<5 && b>=0 && b<5)
-  .map(([a,b])=>a*5+b);
+nums.forEach(n=>{
+const piece=document.createElement("div");
+piece.className="piece";
+piece.draggable=false;
+piece.dataset.index=n;
+
+const x=(n%4)*33.33;
+const y=Math.floor(n/4)*33.33;
+piece.style.backgroundPosition=`${x}% ${y}%`;
+
+piece.style.transform=`rotate(${Math.random()*8-4}deg)`;
+
+tray.appendChild(piece);
+
+dragElement(piece);
+});
 }
 
-/* mover */
-function move(i){
-  if(!neighbors(i).includes(empty)) return;
+function dragElement(el){
+let startX,startY,offsetX,offsetY;
 
-  [tiles[i], tiles[empty]] = [tiles[empty], tiles[i]];
-  empty = i;
+el.addEventListener("pointerdown",e=>{
+startX=e.clientX;
+startY=e.clientY;
 
-  beep(680,.04);
+const rect=el.getBoundingClientRect();
+offsetX=startX-rect.left;
+offsetY=startY-rect.top;
 
-  render();
-  checkWin();
+el.style.position="fixed";
+el.style.zIndex="50";
+el.style.left=rect.left+"px";
+el.style.top=rect.top+"px";
+
+document.body.appendChild(el);
+
+function move(ev){
+el.style.left=(ev.clientX-offsetX)+"px";
+el.style.top=(ev.clientY-offsetY)+"px";
 }
 
-/* embaralhar */
-function shuffleBoard(){
-  for(let k=0;k<350;k++){
-    const opts = neighbors(empty);
-    const pick = opts[Math.floor(Math.random()*opts.length)];
+function up(ev){
+document.removeEventListener("pointermove",move);
+document.removeEventListener("pointerup",up);
 
-    [tiles[pick], tiles[empty]] = [tiles[empty], tiles[pick]];
-    empty = pick;
-  }
+const slots=[...document.querySelectorAll(".slot")];
+let placedOk=false;
 
-  render();
+slots.forEach(slot=>{
+const r=slot.getBoundingClientRect();
+
+if(
+ev.clientX>r.left &&
+ev.clientX<r.right &&
+ev.clientY>r.top &&
+ev.clientY<r.bottom
+){
+if(Number(slot.dataset.index)===Number(el.dataset.index) && slot.children.length===0){
+
+slot.appendChild(el);
+el.style.position="relative";
+el.style.left="0";
+el.style.top="0";
+el.style.width="100%";
+el.style.height="100%";
+el.style.transform="rotate(0deg)";
+el.classList.add("correct");
+
+beep(850,.07);
+
+placed++;
+placedOk=true;
+
+if(placed===16){
+win();
+}
+}
+}
+});
+
+if(!placedOk){
+tray.appendChild(el);
+el.style.position="relative";
+el.style.left="0";
+el.style.top="0";
+el.style.width="";
+el.style.height="";
+el.style.transform=`rotate(${Math.random()*8-4}deg)`;
+beep(420,.04);
+}
 }
 
-/* ganhou */
-function solved(){
-  return tiles.every((v,i)=>v===i);
+document.addEventListener("pointermove",move);
+document.addEventListener("pointerup",up);
+});
 }
 
-async function checkWin(){
-  if(!solved()) return;
+async function win(){
+const ov=document.getElementById("overlay");
+ov.style.display="flex";
 
-  const ov = document.getElementById("overlay");
-  ov.style.display = "flex";
-
-  for(let i=1;i<=3;i++){
-    ov.innerHTML = i < 3 ? `${i}...` : `3 anos de namoro ❤️`;
-    beep(420 + i*120, .16);
-    await new Promise(r=>setTimeout(r,1000));
-  }
-
-  ov.style.display = "none";
-
-  hearts();
-
-  const letter = document.getElementById("letter");
-  letter.style.display = "block";
-
-  beep(980,.25);
+for(let i=1;i<=3;i++){
+ov.innerHTML=i<3?i+"...":"3 anos de namoro ❤️";
+beep(400+i*130,.18);
+await new Promise(r=>setTimeout(r,1000));
 }
 
-/* corações */
+ov.style.display="none";
+
+hearts();
+
+document.getElementById("letter").style.display="block";
+}
+
 function hearts(){
-  for(let i=0;i<35;i++){
-    setTimeout(()=>{
-      const h = document.createElement("div");
-      h.className = "heart";
-      h.innerHTML = "❤";
-
-      h.style.left = Math.random()*100 + "vw";
-      h.style.fontSize = (18 + Math.random()*22) + "px";
-
-      document.body.appendChild(h);
-
-      setTimeout(()=>h.remove(),4000);
-
-      beep(900,.03);
-    }, i*120);
-  }
+for(let i=0;i<35;i++){
+setTimeout(()=>{
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(18+Math.random()*20)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),4000);
+beep(950,.03);
+},i*110);
+}
 }
 </script>
 </body>
-</html>const size=5; const board=document.getElementById('board'); let tiles=[]; let empty=24;
-function makeTiles(){board.innerHTML=''; tiles=[]; for(let i=0;i<25;i++){let d=document.createElement('div'); d.className='tile'; if(i===24){d.classList.add('empty');} else {d.style.backgroundPosition=`${(i%5)*25}% ${Math.floor(i/5)*25}%`; d.onclick=()=>move(i);} board.appendChild(d); tiles.push(i);} render();}
-function render(){[...board.children].forEach((el,pos)=>{const val=tiles[pos]; el.className='tile'; if(val===24){el.classList.add('empty'); el.style.backgroundImage='none';} else {el.style.backgroundImage="url('fotonossa.png')"; el.style.backgroundPosition=`${(val%5)*25}% ${Math.floor(val/5)*25}%`; el.onclick=()=>move(pos);} });}
-function neighbors(i){const r=Math.floor(i/5),c=i%5;return [[r-1,c],[r+1,c],[r,c-1],[r,c+1]].filter(([a,b])=>a>=0&&a<5&&b>=0&&b<5).map(([a,b])=>a*5+b)}
-function beep(f=600,t=.05){const a=new(window.AudioContext||window.webkitAudioContext)();const o=a.createOscillator();const g=a.createGain();o.frequency.value=f;o.connect(g);g.connect(a.destination);g.gain.value=.02;o.start();o.stop(a.currentTime+t)}
-function move(i){if(!neighbors(i).includes(empty))return; [tiles[i],tiles[empty]]=[tiles[empty],tiles[i]]; empty=i; beep(); render(); checkWin();}
-function shuffleBoard(){for(let k=0;k<300;k++){const n=neighbors(empty); const pick=n[Math.floor(Math.random()*n.length)]; [tiles[pick],tiles[empty]]=[tiles[empty],tiles[pick]]; empty=pick;} render();}
-function solved(){return tiles.every((v,i)=>v===i)}
-async function checkWin(){if(!solved())return; const ov=document.getElementById('overlay'); ov.style.display='flex'; for(let i=1;i<=3;i++){ov.innerHTML=i<3?i+'...':'3 anos de namoro ❤️'; beep(400+i*120,.15); await new Promise(r=>setTimeout(r,1000));} ov.style.display='none'; hearts(); document.getElementById('letter').style.display='block';}
-function hearts(){for(let i=0;i<30;i++){setTimeout(()=>{let h=document.createElement('div');h.className='heart';h.textContent='❤';h.style.left=Math.random()*100+'vw';h.style.fontSize=(18+Math.random()*20)+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),4000);beep(900,.03);},i*120)} }
-function startGame(){document.getElementById('startScreen').style.display='none';const g=document.getElementById('gameScreen');g.style.display='block';setTimeout(()=>g.style.opacity='1',50);makeTiles();shuffleBoard();}</script>
-</body>
-</html>
+</html> 
